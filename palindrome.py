@@ -1,7 +1,10 @@
 def is_palind(word):
     i=0
     j=len(word)-1
+    print j
     while i<j:
+        print i
+        print j
         if word[i]!=word[j]:
             print "not palindrome"
             return False
