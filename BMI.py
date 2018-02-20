@@ -19,13 +19,11 @@ ht = input ("What is your height cm ?")
 
 ht_metres =  ht / 100.0
 
-#float (ht_metres)
-
 print ht_metres
 
-bmi_deno = ht_metres * ht_metres
+#bmi_deno = ht_metres * ht_metres
 
-print bmi_deno
+#print bmi_deno
 
 def bmi_calculator(weight,height):
     bmi = weight / float(height * height)
