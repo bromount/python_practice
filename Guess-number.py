@@ -1,3 +1,8 @@
+#!/usr/bin/python
+
+
+#Actual Code Starts Here
+
 import random
 guesses = 0
 number = random.randint(1,1000)
