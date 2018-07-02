@@ -10,10 +10,12 @@ import os
 
 os.system("ls -lrt")
 os.system("which java")
-os.chmod("/home/bromount/Documents/duplicate_songs.txt",771)
-os.system("ls -lrt /home/bromount/Documents/duplicate_songs.txt")
-os.chdir("/home/bromount/")
+#os.chmod("/home/bromount/Documents/duplicate_songs.txt",771)
+#os.system("ls -lrt /home/bromount/Documents/duplicate_songs.txt")
+os.chdir("/Volumes/")
 os.system("pwd")
 os.system("df -h")
 os.system("google-chrome")
 os.system("firefox")
+
+os.system("pwd")
