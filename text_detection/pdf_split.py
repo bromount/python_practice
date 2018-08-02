@@ -8,6 +8,8 @@ Created on Wed Aug  1 10:35:19 2018
 
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
+#Getting Input from user
+
 doc_path=raw_input("Enter the file path with file name : ")
 
 inputpdf = PdfFileReader(open(doc_path, "rb"))
