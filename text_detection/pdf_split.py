@@ -23,5 +23,5 @@ for i in range(inputpdf.numPages):
         print "Page %s saved" % i
         # Converting pages into JPG
     with Image(filename="./pdf/document-page%s.pdf" % i) as img:
-        img.save(filename="./pdf/pdf_image%s.jpg" % i)
+        img.save(filename="./image/pdf_image%s.jpg" % i)
         print "Image %s saved" % i
