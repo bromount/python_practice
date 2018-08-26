@@ -25,7 +25,7 @@ import os
 from utils import Service, encode_image
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from wand.image import Image
-
+from wand.color import Color
 
 def main(photo_file):
     """Run a text detection request on a single image"""
@@ -75,7 +75,10 @@ for i in range(inputpdf.numPages):
         print "Page %s saved" % i
         # Converting pages into JPG
     with Image(filename="./pdf/document-page%s.pdf" % i) as img:
-        image_file = img.save(filename="./image/pdf_image%s.jpg" % i)
+        img.compression_quality = -500
+        img.background_color = Color("white")
+        img.alpha_channel = 'remove'
+        img.save(filename="./image/pdf_image%s.jpg" % i)
         print "Image %s saved" % i
         image_file = "./image/pdf_image%s.jpg" %i
         print image_file
