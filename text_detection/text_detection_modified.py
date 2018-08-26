@@ -52,7 +52,9 @@ def main(photo_file):
         response = service.execute(body=body)
         text = response['responses'][0]['textAnnotations'][0]['description']
         print('Found text: {}'.format(text))
-
+        file1=open("./text/pdf_totext.txt","a")
+        file1.write(text)
+        file1.close()
 '''if __name__ == '__main__':
     print "calling if main"
     
