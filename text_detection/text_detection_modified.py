@@ -77,4 +77,6 @@ for i in range(inputpdf.numPages):
     with Image(filename="./pdf/document-page%s.pdf" % i) as img:
         image_file = img.save(filename="./image/pdf_image%s.jpg" % i)
         print "Image %s saved" % i
+        image_file = "./image/pdf_image%s.jpg" %i
+        print image_file
         main(image_file)
