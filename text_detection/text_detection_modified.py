@@ -23,16 +23,20 @@ import argparse
 import os
 
 from utils import Service, encode_image
+from PyPDF2 import PdfFileWriter, PdfFileReader
+from wand.image import Image
 
 
 def main(photo_file):
     """Run a text detection request on a single image"""
 
     access_token = os.environ.get('VISION_API')
+    print access_token
     service = Service('vision', 'v1', access_token=access_token)
-
+    print photo_file
     with open(photo_file, 'rb') as image:
         base64_image = encode_image(image)
+        print "into with"
         body = {
             'requests': [{
                 'image': {
@@ -49,8 +53,28 @@ def main(photo_file):
         text = response['responses'][0]['textAnnotations'][0]['description']
         print('Found text: {}'.format(text))
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
+    print "calling if main"
+    
     parser = argparse.ArgumentParser()
     parser.add_argument('image_file', help='The image you\'d like to detect text.')
     args = parser.parse_args()
-    main(args.image_file)
+    main(args.image_file)'''
+
+#Getting Input from user
+
+doc_path=raw_input("Enter the file path with file name : ")
+
+inputpdf = PdfFileReader(open(doc_path, "rb"))
+
+for i in range(inputpdf.numPages):
+    output = PdfFileWriter()
+    output.addPage(inputpdf.getPage(i))
+    with open("./pdf/document-page%s.pdf" % i, "wb") as outputStream:
+        output.write(outputStream)
+        print "Page %s saved" % i
+        # Converting pages into JPG
+    with Image(filename="./pdf/document-page%s.pdf" % i) as img:
+        image_file = img.save(filename="./image/pdf_image%s.jpg" % i)
+        print "Image %s saved" % i
+        main(image_file)
