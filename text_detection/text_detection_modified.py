@@ -13,10 +13,6 @@ based on an image's content.
 To run the example, install the necessary libraries by running:
 
     pip install -r requirements.txt
-
-Run the script on an image to get text, E.g.:
-
-    ./text_detection.py <path-to-image>
 """
 
 import argparse
@@ -31,12 +27,11 @@ def main(photo_file):
     """Run a text detection request on a single image"""
 
     access_token = os.environ.get('VISION_API')
-    print access_token
+    if access_token == 'None':
+        print "Import VISION API KEY"
     service = Service('vision', 'v1', access_token=access_token)
-    print photo_file
     with open(photo_file, 'rb') as image:
         base64_image = encode_image(image)
-        print "into with"
         body = {
             'requests': [{
                 'image': {
@@ -52,17 +47,11 @@ def main(photo_file):
         response = service.execute(body=body)
         text = response['responses'][0]['textAnnotations'][0]['description']
         print('Found text: {}'.format(text))
-        file1=open("./text/pdf_totext.txt","a")
+        file1=open("./text/pdf_to_text.txt","a")
         #file1.write(text,'\n')
         file1.write("{}\n".format(text))
         file1.close()
-'''if __name__ == '__main__':
-    print "calling if main"
-    
-    parser = argparse.ArgumentParser()
-    parser.add_argument('image_file', help='The image you\'d like to detect text.')
-    args = parser.parse_args()
-    main(args.image_file)'''
+        print "Text File Appnded"
 
 #Getting Input from user
 
@@ -84,5 +73,5 @@ for i in range(inputpdf.numPages):
         img.save(filename="./image/pdf_image%s.jpg" % i)
         print "Image %s saved" % i
         image_file = "./image/pdf_image%s.jpg" %i
-        print image_file
+        #print image_file
         main(image_file)
