@@ -8,7 +8,6 @@ Modified on Fri Aug 3 08:20:10 2018
 
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from wand.image import Image
-
 #Getting Input from user
 
 doc_path=raw_input("Enter the file path with file name : ")
@@ -25,5 +24,3 @@ for i in range(inputpdf.numPages):
     with Image(filename="./pdf/document-page%s.pdf" % i) as img:
         img.save(filename="./image/pdf_image%s.jpg" % i)
         print "Image %s saved" % i
-        image_file = "./image/pdf_image%s.jpg" %i
-        print image_file

@@ -13,23 +13,24 @@ based on an image's content.
 To run the example, install the necessary libraries by running:
 
     pip install -r requirements.txt
+
+Run the script on an image to get text, E.g.:
+
+    ./text_detection.py <path-to-image>
 """
 
 import argparse
 import os
 
 from utils import Service, encode_image
-from PyPDF2 import PdfFileWriter, PdfFileReader
-from wand.image import Image
-from wand.color import Color
+
 
 def main(photo_file):
     """Run a text detection request on a single image"""
 
     access_token = os.environ.get('VISION_API')
-    if access_token == 'None':
-        print "Import VISION API KEY"
     service = Service('vision', 'v1', access_token=access_token)
+
     with open(photo_file, 'rb') as image:
         base64_image = encode_image(image)
         body = {
@@ -47,31 +48,9 @@ def main(photo_file):
         response = service.execute(body=body)
         text = response['responses'][0]['textAnnotations'][0]['description']
         print('Found text: {}'.format(text))
-        file1=open("./text/pdf_to_text.txt","a")
-        #file1.write(text,'\n')
-        file1.write("{}\n".format(text))
-        file1.close()
-        print "Text File Appnded"
 
-#Getting Input from user
-
-doc_path=raw_input("Enter the file path with file name : ")
-
-inputpdf = PdfFileReader(open(doc_path, "rb"))
-
-for i in range(inputpdf.numPages):
-    output = PdfFileWriter()
-    output.addPage(inputpdf.getPage(i))
-    with open("./pdf/document-page%s.pdf" % i, "wb") as outputStream:
-        output.write(outputStream)
-        print "Page %s saved" % i
-        # Converting pages into JPG
-    with Image(filename="./pdf/document-page%s.pdf" % i) as img:
-        img.compression_quality = -500
-        img.background_color = Color("white")
-        img.alpha_channel = 'remove'
-        img.save(filename="./image/pdf_image%s.jpg" % i)
-        print "Image %s saved" % i
-        image_file = "./image/pdf_image%s.jpg" %i
-        #print image_file
-        main(image_file)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('image_file', help='The image you\'d like to detect text.')
+    args = parser.parse_args()
+    main(args.image_file)
