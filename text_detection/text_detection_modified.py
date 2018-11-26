@@ -27,11 +27,13 @@ from utils import Service, encode_image
 
 def main(photo_file):
     """Run a text detection request on a single image"""
-
+    print "Into Main Function"
     access_token = os.environ.get('VISION_API')
+    print access_token
     service = Service('vision', 'v1', access_token=access_token)
 
     with open(photo_file, 'rb') as image:
+        print "into with section"
         base64_image = encode_image(image)
         body = {
             'requests': [{
@@ -45,11 +47,15 @@ def main(photo_file):
 
             }]
         }
+        print "out"
         response = service.execute(body=body)
+        print "After response"
         text = response['responses'][0]['textAnnotations'][0]['description']
+        print "after text"
         print('Found text: {}'.format(text))
 
 if __name__ == '__main__':
+    print "Main"
     parser = argparse.ArgumentParser()
     parser.add_argument('image_file', help='The image you\'d like to detect text.')
     args = parser.parse_args()
